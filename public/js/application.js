@@ -15,5 +15,6 @@
 
 //= require lib/jquery-2.1.1.min
 //= require lib/bootstrap.min
-//= require lib/dropzone.min.js
+//= require lib/dropzone.min
+//= require lib/s3upload
 //= require main

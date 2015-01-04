@@ -2,7 +2,9 @@ extends ../layout
 block content
   .page-header
     h3 Add stem to track
-    form.dropzone(id='create-stem-dropzone', method='POST', action='#')
+
+    form.dropzone(id='create-stem-dropzone', method='POST', action='/addstem/#{trackid}')
+        input(type='hidden', name='_csrf', value=_csrf)
         div.dropzone-previews
-        input(placeholder='Stem Name',name='stemName')
+        input(placeholder='name',name='name')
         button.btn.btn-success(type='submit') Add
