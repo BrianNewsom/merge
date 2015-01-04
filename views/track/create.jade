@@ -1,0 +1,16 @@
+extends ../layout
+
+block content
+  .page-header
+    h3 Create a blank track
+  form.form-horizontal(id='create-track-form', method='POST')
+    input(type='hidden', name='_csrf', value=_csrf)
+    .form-group
+      label.col-sm-3.control-label(for='name') Name
+      .col-sm-7
+        input.form-control(type='string', id='name', autofocus)
+    .form-group
+      .col-sm-offset-3.col-sm-7
+        button.btn.btn-success(type='submit')
+          span.ion-person-add
+          | Create

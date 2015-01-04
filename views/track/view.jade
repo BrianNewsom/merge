@@ -4,17 +4,22 @@ block content
   .page-header
     h3 #{track.name}
     h4 By: #{track.author}
-    p Stems: #{stem.name} by #{stem.author}
+    ul
+        each stem in stems
+            li #{stem.name} by: #{stem.author}
+
     div#mixer
     != js('mixer')
     script.
-        var buffers = {};
-        var stems = [];
-        stems.push('#{stem.name}')
-        buffers['#{stem.name}'] = '#{stem.url}'
-        window.AudioContext = window.AudioContext || window.webkitAudioContext;
-        context = new AudioContext();
-        $(document).ready(function(){
-            loadBuffers(buffers);
-            Mixer.init(stems);
-        })
+        var s = [];
+        var buff = {};
+
+    each stem in stems
+        script.
+            s.push({'name':'#{stem.name}','url':'#{stem.url}'})
+            buff['#{stem.name}'] = '#{stem.url}'
+
+    script.
+        console.log(s);
+        loadBuffers(buff);
+        Mixer.init(s)

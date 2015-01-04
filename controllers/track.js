@@ -1,6 +1,5 @@
 var _ = require('lodash');
 var async = require('async');
-var crypto = require('crypto');
 var nodemailer = require('nodemailer');
 var passport = require('passport');
 var Track = require('../models/Track');
@@ -8,15 +7,23 @@ var Stem = require('../models/Stem');
 var secrets = require('../config/secrets');
 
 function getStems(stems, callback) {
-    for(var i=0 ; i < stems.length ; i++){
-        Stem.findById(stems[i], function(err, stem){
-            if (err || stem == null){
-                console.log('Stem not found');
-            } else {
-                callback(stem)
+
+    async.map(stems, function(key, next){
+        Stem.findById(key, function(err, result){
+            if (err || result == null){
+                console.log('not found');
+            }else{
+                console.log(result);
+                next(err,result);
             }
         })
-    }
+    }, function(err, result){
+         if (err){
+            console.log(err);
+         }else{
+            callback(result);
+         }
+    });
 }
 
 /**
@@ -32,17 +39,25 @@ exports.getTrack = function(req, res) {
          })
       }
       else {
-        getStems(track.stems, function(stem){
+        getStems(track.stems, function(stems){
             res.render('track/view', {
                 title: 'View Track',
                 track: track,
-                stem: stem
+                stems: stems
             });
         });
       }
   });
 };
 
+exports.addTrack = function(req,res){
+    res.render('track/create', {
+        title: 'Create A Track'
+    })
+}
 
-
-
+exports.postTrack = function(req,res){
+    res.render('track/create', {
+        title: 'Create A Track'
+    })
+}
