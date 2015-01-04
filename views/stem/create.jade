@@ -2,11 +2,11 @@ extends ../layout
 
 block content
   .page-header
-    h3 Create a blank track
-  form.form-horizontal(id='create-track-form', method='POST')
+    h3 Add stem to track
+  form.form-horizontal(id='create-stem-form', method='POST')
     input(type='hidden', name='_csrf', value=_csrf)
     .form-group
-      label.col-sm-3.control-label(for='name') Name
+      label.col-sm-3.control-label(for='trackid') Name
       .col-sm-7
         input.form-control(name='name' id='name', autofocus)
     .form-group

@@ -30,6 +30,7 @@ var userController = require('./controllers/user');
 var apiController = require('./controllers/api');
 var contactController = require('./controllers/contact');
 var trackController = require('./controllers/track');
+var stemController = require('./controllers/stem');
 
 /**
  * API keys and Passport configuration.
@@ -129,8 +130,11 @@ app.post('/account/delete', passportConf.isAuthenticated, userController.postDel
 app.get('/account/unlink/:provider', passportConf.isAuthenticated, userController.getOauthUnlink);
 
 app.get('/track', trackController.addTrack);
-app.get('/track', trackController.postTrack);
+app.post('/track', passportConf.isAuthenticated, trackController.postTrack);
 app.get('/track/:id', trackController.getTrack);
+
+app.get('/addstem/:trackid', stemController.addStem);
+app.post('/addstem/:trackid', stemController.postStem);
 /**
  * API examples routes.
  */

@@ -4,6 +4,7 @@ var nodemailer = require('nodemailer');
 var passport = require('passport');
 var Track = require('../models/Track');
 var Stem = require('../models/Stem');
+var User = require('../models/User');
 var secrets = require('../config/secrets');
 
 function getStems(stems, callback) {
@@ -56,8 +57,27 @@ exports.addTrack = function(req,res){
     })
 }
 
-exports.postTrack = function(req,res){
-    res.render('track/create', {
-        title: 'Create A Track'
-    })
+/* Create a track with form elements given */
+
+exports.postTrack = function(req,res,next){
+    var track = new Track({
+        name:req.body.name,
+        author: req.user.email
+    });
+    var user = new User(req.user);
+    Track.findOne({'name':req.body.name,'author':req.user.email}, function(err, existingTrack){
+        if (existingTrack){
+            req.flash('errors', { msg: 'You have already created a track with this name.' });
+            return res.redirect('/track');
+        }
+        track.save(function(err,track){
+            if(err) return next(err);
+            // Append added track to user's owned tracks
+            (user.tracks) ? user.tracks.push(track.id) : user.tracks = [];
+            User.findByIdAndUpdate(user.id, {$set : {'tracks' : user.tracks}},function(err,user){
+                if (err) return next(err);
+                res.redirect('/track/' + String(track.id));
+            })
+        });
+    });
 }
