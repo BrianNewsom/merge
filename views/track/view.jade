@@ -5,3 +5,16 @@ block content
     h3 #{track.name}
     h4 By: #{track.author}
     p Stems: #{stem.name} by #{stem.author}
+    div#mixer
+    != js('mixer')
+    script.
+        var buffers = {};
+        var stems = [];
+        stems.push('#{stem.name}')
+        buffers['#{stem.name}'] = '#{stem.url}'
+        window.AudioContext = window.AudioContext || window.webkitAudioContext;
+        context = new AudioContext();
+        $(document).ready(function(){
+            loadBuffers(buffers);
+            Mixer.init(stems);
+        })
