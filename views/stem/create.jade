@@ -1,16 +1,8 @@
 extends ../layout
-
 block content
   .page-header
     h3 Add stem to track
-  form.form-horizontal(id='create-stem-form', method='POST')
-    input(type='hidden', name='_csrf', value=_csrf)
-    .form-group
-      label.col-sm-3.control-label(for='trackid') Name
-      .col-sm-7
-        input.form-control(name='name' id='name', autofocus)
-    .form-group
-      .col-sm-offset-3.col-sm-7
-        button.btn.btn-success(type='submit')
-          span.ion-person-add
-          | Create
+    form.dropzone(id='create-stem-dropzone', method='POST', action='#')
+        div.dropzone-previews
+        input(placeholder='Stem Name',name='stemName')
+        button.btn.btn-success(type='submit') Add
