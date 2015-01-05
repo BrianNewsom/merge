@@ -135,6 +135,7 @@ app.get('/track/:id', trackController.getTrack);
 
 app.get('/addstem/:trackid', stemController.addStem);
 app.post('/addstem/:trackid', stemController.postStem);
+app.get('/sign_s3', stemController.signS3);
 /**
  * API examples routes.
  */

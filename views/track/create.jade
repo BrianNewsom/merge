@@ -3,7 +3,7 @@ extends ../layout
 block content
   .page-header
     h3 Create a blank track
-  form.form-horizontal(id='create-track-form', method='POST')
+    form.form-horizontal(id='create-track-form', method='POST')
     input(type='hidden', name='_csrf', value=_csrf)
     .form-group
       label.col-sm-3.control-label(for='name') Name

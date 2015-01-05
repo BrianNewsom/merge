@@ -1,10 +1,14 @@
 extends ../layout
+
 block content
   .page-header
-    h3 Add stem to track
+    h3 Add a stem to your track.
+    input(type="file", id="files")
+    p(id="status")
+        Please select a file
 
-    form.dropzone(id='create-stem-dropzone', method='POST', action='/addstem/#{trackid}')
+    form(method="POST") 
         input(type='hidden', name='_csrf', value=_csrf)
-        div.dropzone-previews
-        input(placeholder='name',name='name')
-        button.btn.btn-success(type='submit') Add
+        input(type="text", name="name", placeholder="name")
+        input(type="submit", value="Add to track!")
+
