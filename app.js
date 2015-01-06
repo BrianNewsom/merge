@@ -134,7 +134,7 @@ app.post('/track', passportConf.isAuthenticated, trackController.postTrack);
 app.get('/track/:id', trackController.getTrack);
 
 app.get('/addstem/:trackid', stemController.addStem);
-app.post('/addstem/:trackid', stemController.postStem);
+app.post('/addstem/:trackid/:stemid', stemController.postStem);
 app.get('/sign_s3', stemController.signS3);
 /**
  * API examples routes.

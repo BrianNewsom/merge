@@ -7,7 +7,7 @@ block content
     p(id="status")
         Please select a file
 
-    form(method="POST") 
+    form(method="POST" action="/addstem/#{trackid}/#{stemid}") 
         input(type='hidden', name='_csrf', value=_csrf)
         input(type="text", name="name", placeholder="name")
         input(type="submit", value="Add to track!")

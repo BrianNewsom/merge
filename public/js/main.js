@@ -1,5 +1,7 @@
 function s3_upload(){
     var status_elem = document.getElementById("status");
+    var url_elem = document.getElementById("avatar_url");
+    var preview_elem = document.getElementById("preview");
     var s3upload = new S3Upload({
         file_dom_selector: 'files',
         s3_sign_put_url: '/sign_s3',
@@ -19,9 +21,7 @@ function s3_upload(){
 /*
 * Listen for file selection:
 */
-$(document).ready(function(){
-    (function() {
-        var input_element = document.getElementById("files");
-        input_element.onchange = s3_upload;
-    })();
-});
+(function() {
+    var input_element = document.getElementById("files");
+    input_element.onchange = s3_upload;
+})();
