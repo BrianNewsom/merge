@@ -1,10 +1,10 @@
-function s3_upload(){
+function s3_upload(stemid){
     var status_elem = document.getElementById("status");
     var url_elem = document.getElementById("avatar_url");
     var preview_elem = document.getElementById("preview");
     var s3upload = new S3Upload({
         file_dom_selector: 'files',
-        s3_sign_put_url: '/sign_s3',
+        s3_sign_put_url: '/sign_s3/' + stemid,
         onProgress: function(percent, message) {
             status_elem.innerHTML = 'Upload progress: ' + percent + '% ' + message;
         },
@@ -21,7 +21,3 @@ function s3_upload(){
 /*
 * Listen for file selection:
 */
-(function() {
-    var input_element = document.getElementById("files");
-    input_element.onchange = s3_upload;
-})();

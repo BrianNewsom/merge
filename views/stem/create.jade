@@ -3,7 +3,7 @@ extends ../layout
 block content
   .page-header
     h3 Add a stem to your track.
-    input(type="file", id="files")
+    input(type="file", id="files", onchange="s3_upload('#{stemid}')")
     p(id="status")
         Please select a file
 

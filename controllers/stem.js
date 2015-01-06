@@ -69,7 +69,7 @@ exports.signS3 = function(req,res){
     var s3 = new aws.S3();
     var s3_params = {
         Bucket: S3_BUCKET,
-        Key: req.query.s3_object_name,
+        Key: req.params.stemid,
         Expires: 60,
         ContentType: req.query.s3_object_type,
         ACL: 'public-read'
@@ -81,7 +81,7 @@ exports.signS3 = function(req,res){
         else{
             var return_data = {
                 signed_request: data,
-                url: 'https://'+S3_BUCKET+'.s3.amazonaws.com/'+req.query.s3_object_name
+                url: 'https://'+S3_BUCKET+'.s3.amazonaws.com/'+req.params.stemid
             };
             res.write(JSON.stringify(return_data));
             res.end();
