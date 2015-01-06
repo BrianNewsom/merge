@@ -60,16 +60,18 @@ exports.postStem = function(req,res,next){
 }
 
 exports.signS3 = function(req,res){
-    console.log('signing s3');
     var AWS_ACCESS_KEY= secrets.aws.accessKeyId;
     var AWS_SECRET_KEY= secrets.aws.secretAccessKey;
     var S3_BUCKET='briannewsomsongs';
+
+    // TODO: Add all file types to extensions obj
+    var key = req.params.stemid + secrets.extensions[req.query.s3_object_type];
 
     aws.config.update({accessKeyId: AWS_ACCESS_KEY, secretAccessKey: AWS_SECRET_KEY});
     var s3 = new aws.S3();
     var s3_params = {
         Bucket: S3_BUCKET,
-        Key: req.params.stemid,
+        Key: key,
         Expires: 60,
         ContentType: req.query.s3_object_type,
         ACL: 'public-read'
@@ -81,7 +83,7 @@ exports.signS3 = function(req,res){
         else{
             var return_data = {
                 signed_request: data,
-                url: 'https://'+S3_BUCKET+'.s3.amazonaws.com/'+req.params.stemid
+                url: 'https://'+S3_BUCKET+'.s3.amazonaws.com/'+ key
             };
             res.write(JSON.stringify(return_data));
             res.end();

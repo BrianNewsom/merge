@@ -42,11 +42,9 @@
     };
 
     S3Upload.prototype.createCORSRequest = function(method, url) {
-        console.log('creating cors request')
       var xhr;
       xhr = new XMLHttpRequest();
       if (xhr.withCredentials != null) {
-          console.log('credentials')
         xhr.open(method, url, true);
       } else if (typeof XDomainRequest !== "undefined") {
         xhr = new XDomainRequest();
@@ -54,17 +52,14 @@
       } else {
         xhr = null;
       }
-      console.log('made it out');
       return xhr;
     };
 
     S3Upload.prototype.executeOnSignedUrl = function(file, callback) {
-        console.log('signedurl')
       var this_s3upload, xhr;
       this_s3upload = this;
       xhr = new XMLHttpRequest();
       xhr.open('GET', this.s3_sign_put_url + '?s3_object_type=' + file.type + '&s3_object_name=' + this.s3_object_name, true);
-      console.log('xhr opened')
       xhr.overrideMimeType('text/plain; charset=x-user-defined');
       xhr.onreadystatechange = function(e) {
         var result;
@@ -84,18 +79,15 @@
     };
 
     S3Upload.prototype.uploadToS3 = function(file, url, public_url) {
-        console.log('upload to s3')
       var this_s3upload, xhr;
       this_s3upload = this;
       xhr = this.createCORSRequest('PUT', url);
       if (!xhr) {
         this.onError('CORS not supported');
       } else {
-          console.log('cors supported');
         xhr.onload = function() {
           if (xhr.status === 200) {
             this_s3upload.onProgress(100, 'Upload completed.');
-            console.log('finished');
             return this_s3upload.onFinishS3Put(public_url);
           } else {
             return this_s3upload.onError('Upload error: ' + xhr.status);
@@ -105,7 +97,6 @@
           return this_s3upload.onError('XHR error.');
         };
         xhr.upload.onprogress = function(e) {
-            console.log('progress');
           var percentLoaded;
           if (e.lengthComputable) {
             percentLoaded = Math.round((e.loaded / e.total) * 100);
@@ -119,7 +110,6 @@
     };
 
     S3Upload.prototype.uploadFile = function(file) {
-        console.log('upload file');
       var this_s3upload;
       this_s3upload = this;
       return this.executeOnSignedUrl(file, function(signedURL, publicURL) {
