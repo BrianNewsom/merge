@@ -6,7 +6,7 @@ block content
     h4 By: #{track.author}
     ul
         each stem in stems
-            li #{stem.name} by: #{stem.author}
+            li #{stem.name} by: #{stem.author} id: #{stem.id}
 
     button.btn(onClick="javascript:window.location.href='/addstem/#{track.id}'") Add Stem to This Track
     div#mixer
