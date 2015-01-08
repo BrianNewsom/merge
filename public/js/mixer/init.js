@@ -164,7 +164,7 @@ Mixer.init = function(stems) {
         outStr = '<p> This track does not exist or has no stems :( </p>';
     } else {
         // Set as disabled until loaded
-        outStr = '<p><input type="button" id="playBtn" onclick="Mixer.toggle();" value="Play/Pause" disabled/></p>';
+        outStr = '';
         for (var i = 0 ; i < len ; i++){
             outStr = outStr + '<p>' + this.stems[i] + '<input type="range" min="0" max="100" value="50" oninput="Mixer.changeVol(this,' + String(i) + ');" id="track' + String(i) + '"/> </p>';
         }
