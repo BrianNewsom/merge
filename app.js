@@ -131,7 +131,8 @@ app.get('/account/unlink/:provider', passportConf.isAuthenticated, userControlle
 
 app.get('/track', trackController.addTrack);
 app.post('/track', passportConf.isAuthenticated, trackController.postTrack);
-app.get('/track/:id', trackController.getTrack);
+app.get('/track/:id', trackController.viewTrack);
+app.get('/track/:id/get', trackController.getTrack);
 
 app.get('/addstem/:trackid', stemController.addStem);
 app.post('/addstem/:trackid/:stemid', stemController.postStem);

@@ -14,8 +14,7 @@ function getStems(stems, callback) {
             if (err || result == null){
                 console.log('not found');
             }else{
-                console.log(result);
-                next(err,result);
+                next(err,result.toJSON());
             }
         })
     }, function(err, result){
@@ -32,23 +31,37 @@ function getStems(stems, callback) {
  * Track show page for track corresponding to id.
  */
 
-exports.getTrack = function(req, res) {
-  Track.findById(req.params.id , function(err, track){
-      if (err || track == null) {
-         res.render('track/nonexistent', {
-            title: 'Track not found'
-         })
-      }
-      else {
-        getStems(track.stems, function(stems){
-            res.render('track/view', {
-                title: 'View Track',
-                track: track,
-                stems: stems
-            });
-        });
-      }
-  });
+exports.getTrack = function(req, res, next){
+    getInfo(req,res,next,null);
+}
+
+function getInfo(req,res,next,cb){
+    Track.findById(req.params.id, function(err, track){
+        if (err || track == null){
+            return null;
+        }
+        else {
+            getStems(track.stems, function(stems){
+                var trackInfo = {
+                    title: 'View Track',
+                    track: track,
+                    stems: stems
+                };
+                // See if callback exists
+                if (!cb){
+                    res.send(trackInfo);
+                } else{
+                    cb(trackInfo);
+                }
+            })
+        }
+    })
+}
+
+exports.viewTrack = function(req, res, next) {
+    getInfo(req, res, next, function(trackInfo){
+        res.render('track/view', trackInfo);
+    });
 };
 
 exports.addTrack = function(req,res){
