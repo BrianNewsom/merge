@@ -135,8 +135,8 @@ app.get('/track/:id', trackController.viewTrack);
 app.get('/track/:id/get', trackController.getTrack);
 app.post('/addrep/:id', passportConf.isAuthenticated, trackController.addRep);
 
-app.get('/addstem/:trackid', stemController.addStem);
-app.post('/addstem/:trackid/:stemid', stemController.postStem);
+app.get('/addstem/:trackid', passportConf.isAuthenticated, stemController.addStem);
+app.post('/addstem/:trackid/:stemid', passportConf.isAuthenticated, stemController.postStem);
 app.get('/sign_s3/:stemid', stemController.signS3);
 
 /**
