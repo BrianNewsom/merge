@@ -10,17 +10,3 @@ block content
 
     button.btn(onClick="javascript:window.location.href='/addstem/#{track.id}'") Add Stem to This Track
     div#mixer
-    != js('mixer')
-    script.
-        var s = [];
-        var buff = {};
-
-    each stem in stems
-        script.
-            s.push({'name':'#{stem.name}','url':'#{stem.url}'})
-            buff['#{stem.name}'] = '#{stem.url}'
-
-    script.
-        console.log(s);
-        loadBuffers(buff);
-        Mixer.init(s)

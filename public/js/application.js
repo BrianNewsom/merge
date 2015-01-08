@@ -17,4 +17,5 @@
 //= require lib/bootstrap.min
 //= require lib/dropzone.min
 //= require lib/s3upload
+//= require mixer/init
 //= require main

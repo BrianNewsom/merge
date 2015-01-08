@@ -12,10 +12,9 @@
  * you don't have touch this file at all, otherwise "require" additional
  * scripts down below using //= filename.js notation.
  */
+
 //= require lib/jquery-2.1.1.min
 //= require lib/bootstrap.min
+//= require lib/dropzone.min
+//= require lib/s3upload
 //= require main
-//= require mixer/init
-//= require mixer/buffer-loader
-//= require mixer/mixer
-//= require mixer/getSong
