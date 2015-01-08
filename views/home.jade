@@ -7,8 +7,11 @@ block content
   .row
     .col-sm-6
       h2 Popular Tracks
-      p Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui.
-      p
+      ul
+        each track in tracks
+            li
+                a(href='/track/#{track.id}') #{track.name} 
+                | by #{track.author}
         a.btn.btn-default(href='#', role='button') View more »
     .col-sm-6
       h2 Popular Artists

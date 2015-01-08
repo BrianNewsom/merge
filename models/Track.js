@@ -16,4 +16,13 @@ trackSchema.methods.addStem = function(stemId, callback){
     })
 }
 
+trackSchema.statics.getTop = function(n, cb){
+    // TODO: add rep to determine popularity
+    var query = this.find({}).limit(n);
+    query.exec(function(err, tracks){
+        console.log(tracks);
+        cb(tracks);
+    });
+}
+
 module.exports = mongoose.model('Track', trackSchema);
