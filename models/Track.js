@@ -3,6 +3,7 @@ var mongoose = require('mongoose');
 var trackSchema = new mongoose.Schema({
   name: String,
   author: String,
+  rep: Number,
   stems: Array
 });
 
@@ -16,9 +17,17 @@ trackSchema.methods.addStem = function(stemId, callback){
     })
 }
 
+trackSchema.methods.addRep = function(cb){
+    var track = this;
+    track.rep ? track.rep = track.rep + 1 : track.rep = 1;
+    track.save(function(err,track){
+        if (err) return next(err)
+        cb(track);
+    })
+}
 trackSchema.statics.getTop = function(n, cb){
     // TODO: add rep to determine popularity
-    var query = this.find({}).limit(n);
+    var query = this.find().sort({'rep':-1}).limit(n);
     query.exec(function(err, tracks){
         console.log(tracks);
         cb(tracks);

@@ -94,3 +94,26 @@ exports.postTrack = function(req,res,next){
         });
     });
 }
+
+exports.addRep = function(req,res,next){
+    Track.findById(req.params.id, function(err, track){
+        if (err || track == null) console.log(err);
+        else{
+            console.log(req.user);
+            if (_.contains(req.user.reps,req.params.id)){
+                // User has already repped
+                // TODO: Handle this - undo star or give flash warning or something
+                res.redirect('/track/' + req.params.id);
+            } else{
+                // Otherwise add to users repped and add rep to track
+                req.user.reps.push(req.params.id);
+                console.log(req.user.reps);
+                User.findByIdAndUpdate(req.user.id, {$set : {'reps' : req.user.reps}}, function(err, user){
+                    if (err) return next(err);
+                    track.addRep(function(){res.redirect('/track/' + req.params.id);});
+                })
+            }
+        }
+    })
+}
+

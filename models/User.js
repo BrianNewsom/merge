@@ -7,6 +7,7 @@ var userSchema = new mongoose.Schema({
   password: String,
 
   tracks: Array,
+  reps: Array,
 
   facebook: String,
   twitter: String,

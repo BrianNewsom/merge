@@ -2,11 +2,18 @@ extends ../layout
 
 block content
   .page-header
-    h3 #{track.name}
+    h3 #{track.name} - #{track.rep} Stars
     h4 By: #{track.author}
     ul
         each stem in stems
             li #{stem.name} by: #{stem.author} id: #{stem.id}
+
+    form.form-horizontal(id='rep-track-form', method='POST', action='/addrep/#{track.id}')
+        input(type='hidden', name='_csrf', value=_csrf)
+        .form-group
+            .col-sm-offset-3.col-sm-7
+                button.btn.btn-success(type='submit') +1
+
 
     button.btn(onClick="javascript:window.location.href='/addstem/#{track.id}'") Add Stem to This Track
     div#mixer
