@@ -127,3 +127,30 @@ exports.topTracks = function(req,res,next){
         })
     })
 }
+
+// UNTESTED
+exports.fork = function(req, res,next){
+    var trackid = req.params.id;
+    Track.findById(trackid, function(err, oldTrack){
+        // Cannot fork own track.
+        if (_.contains(req.user.tracks,trackid)){
+            console.log('This is already your track or you already have a fork of it!');
+            res.send();
+        } else{
+            // TODO: Don't allow multiple forks by same user
+            // Create identical track owned by current user
+            var newTrack = new Track(oldTrack.toJSON());
+            // Set as forkOf oldTrack
+            newTrack.forkOf = trackid;
+            console.log(newTrack);
+            newTrack.author = req.user.email;
+            newTrack.save(function(err, track){
+                console.log(track);
+                if (err) return next(err)
+                else{
+                    res.redirect('/track/' + track.id);
+                }
+            })
+        }
+    })
+}

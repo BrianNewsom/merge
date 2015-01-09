@@ -141,6 +141,8 @@ app.get('/sign_s3/:stemid', stemController.signS3);
 
 app.get('/top', trackController.topTracks);
 
+app.post('/fork/:id', trackController.fork);
+
 /**
  * API examples routes.
  */
