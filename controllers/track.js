@@ -103,6 +103,7 @@ exports.addRep = function(req,res,next){
             if (_.contains(req.user.reps,req.params.id)){
                 // User has already repped
                 // TODO: Handle this - undo star or give flash warning or something
+                req.flash('errors', { msg: 'You have already starred this track!'});
                 res.redirect('/track/' + req.params.id);
             } else{
                 // Otherwise add to users repped and add rep to track
@@ -125,5 +126,38 @@ exports.topTracks = function(req,res,next){
             title: 'Top Tracks',
             tracks: tracks
         })
+    })
+}
+
+exports.fork = function(req, res,next){
+    var trackid = req.params.id;
+    Track.findById(trackid, function(err, oldTrack){
+        // Cannot fork own track.
+        if (req.user.email == oldTrack.author){
+            req.flash('errors', { msg: 'You cannot fork your own track!'});
+            res.redirect('/track/' + oldTrack.id);;
+        } else{
+            // TODO: Don't allow multiple forks by same user
+            // Create identical track owned by current user
+            var newTrack = new Track(oldTrack.toJSON());
+            // Set as forkOf oldTrack
+            newTrack.forkOf = trackid;
+            newTrack.author = req.user.email;
+            newTrack.rep = 0;
+            newTrack.save(function(err, track){
+                if (err) return next(err)
+                else{
+                    // Add newTrack to users track
+                    var tracks = req.user.tracks;
+                    tracks.push(track.id);
+                    User.findByIdAndUpdate(req.user.id, {$set : {'stems' : tracks }}, function(err, user){
+                        if (err) return next(err);
+                        else{
+                            res.redirect('/track/' + track.id);
+                        }
+                    });
+                }
+            })
+        }
     })
 }

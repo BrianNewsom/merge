@@ -4,7 +4,8 @@ var trackSchema = new mongoose.Schema({
   name: String,
   author: String,
   rep: Number,
-  stems: Array
+  stems: Array,
+  forkOf: String
 });
 
 trackSchema.methods.addStem = function(stemId, callback){
@@ -34,4 +35,14 @@ trackSchema.statics.getTop = function(n, cb){
     });
 }
 
+trackSchema.options.toJSON = {
+    // Removes id - be careful
+    transform: function(doc, ret, options) {
+        delete ret._id;
+        delete ret.__v;
+        console.log('ret');
+        console.log(ret);
+        return ret;
+    }
+};
 module.exports = mongoose.model('Track', trackSchema);

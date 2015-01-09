@@ -3,13 +3,13 @@ extends ../layout
 block content
   .page-header
     h3 #{track.name} - #{track.rep} Stars
-        form(id='rep-track-form', method='POST', action='/addrep/#{track.id}')
-            input(type='hidden', name='_csrf', value=_csrf)
-            .form-group
-                .col-sm-offset-3.col-sm-7
-                    button.btn.btn-success(type='submit') +1
-    br
-    br
+    form(id='rep-track-form', method='POST', action='/addrep/#{track.id}')
+        input(type='hidden', name='_csrf', value=_csrf)
+        button.btn.btn-success(type='submit') +1
+    form(id='fork-track-form', method='POST', action='/fork/#{track.id}')
+        input(type='hidden', name='_csrf', value=_csrf)
+        button.btn.btn-success(type='submit') Fork
+
     h4 By: #{track.author}
     ul
         each stem in stems
