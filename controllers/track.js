@@ -117,3 +117,13 @@ exports.addRep = function(req,res,next){
     })
 }
 
+exports.topTracks = function(req,res,next){
+    var NUM_TRACKS=20;
+
+    Track.getTop(NUM_TRACKS, function(tracks){
+        res.render('track/top', {
+            title: 'Top Tracks',
+            tracks: tracks
+        })
+    })
+}

@@ -1,0 +1,13 @@
+extends ../layout
+
+block content
+  h1 Merge Audio
+  hr
+  .row
+    .col-sm-12
+      h2 Popular Tracks
+      ul
+        each track in tracks
+            li
+                a(href='/track/#{track.id}') #{track.name}
+                |  by #{track.author}
