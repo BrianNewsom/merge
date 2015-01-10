@@ -55,7 +55,7 @@ exports.postStem = function(req,res,next){
                         console.log(err);
                     } else{
                         track.addStem(stem.id, function(track){
-                            console.log(res);
+                            res.redirect('/track/' + track.id);
                         });
                     }
                 })
