@@ -1,0 +1,9 @@
+extends ../layout
+
+block content
+  .page-header
+    h3 #{user.email}
+
+    h4 Tracks
+    each track in user.tracks
+        #{track}

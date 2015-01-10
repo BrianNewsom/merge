@@ -378,3 +378,22 @@ exports.postForgot = function(req, res, next) {
     res.redirect('/forgot');
   });
 };
+
+exports.getUser = function(req, res, next){
+    res.render('account/viewProfile',{
+        title: 'View Profile',
+        user: req.user
+    })
+}
+
+
+exports.getOtherUser = function(req, res, next){
+    User.findById(req.params.id, function(err, user){
+        res.render('account/viewProfile',{
+            title: 'View Profile',
+            user: user
+        })
+    })
+}
+
+

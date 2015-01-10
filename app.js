@@ -143,6 +143,9 @@ app.get('/top', trackController.topTracks);
 
 app.post('/fork/:id', trackController.fork);
 
+app.get('/user', passportConf.isAuthenticated, userController.getUser);
+app.get('/user/:id', passportConf.isAuthenticated, userController.getOtherUser)
+
 /**
  * API examples routes.
  */
