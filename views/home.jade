@@ -15,6 +15,9 @@ block content
         a.btn.btn-default(href='/top', role='button') View more »
     .col-sm-6
       h2 Popular Artists
-      p Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui.
-      p
-        a.btn.btn-default(href='#', role='button') View more »
+      ul
+        each user in users
+            li
+                a(href='/user/#{user.id}') #{user.email}
+                |  (Broken link)
+        a.btn.btn-default(href='/#', role='button') View more »

@@ -13,9 +13,12 @@ var secrets = require('../config/secrets');
 
 exports.index = function(req, res) {
     Track.getTop(5, function(tracks){
-        res.render('home', {
-            title: 'Home',
-            tracks: tracks
-        });
+        User.getTop(5, function(users){
+            res.render('home', {
+                title: 'Home',
+                tracks: tracks,
+                users: users
+            });
+        })
     });
 };

@@ -61,8 +61,6 @@ function loadBuffers(stems) {
     names.push(stems[i].name);
     paths.push(path);
   }
-  console.log(names);
-  console.log(paths);
   bufferLoader = new BufferLoader(context, paths, function(bufferList) {
     for (var i = 0; i < bufferList.length; i++) {
       var buffer = bufferList[i];

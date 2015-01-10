@@ -75,4 +75,11 @@ userSchema.methods.gravatar = function(size) {
   return 'https://gravatar.com/avatar/' + md5 + '?s=' + size + '&d=retro';
 };
 
+userSchema.statics.getTop = function(n, cb){
+    var q = this.find().limit(n);
+    q.exec(function(err, users){
+        cb(users);
+    })
+}
+
 module.exports = mongoose.model('User', userSchema);

@@ -3,9 +3,9 @@ var mongoose = require('mongoose');
 var trackSchema = new mongoose.Schema({
   name: String,
   author: String,
-  rep: Number,
-  stems: Array,
-  forkOf: String
+  rep: { type: Number, default: 0 },
+  stems: { type: Array, default: []},
+  forkOf: { type: String, default: ''}
 });
 
 trackSchema.methods.addStem = function(stemId, callback){
@@ -30,7 +30,6 @@ trackSchema.statics.getTop = function(n, cb){
     // TODO: add rep to determine popularity
     var query = this.find().sort({'rep':-1}).limit(n);
     query.exec(function(err, tracks){
-        console.log(tracks);
         cb(tracks);
     });
 }
@@ -40,9 +39,8 @@ trackSchema.options.toJSON = {
     transform: function(doc, ret, options) {
         delete ret._id;
         delete ret.__v;
-        console.log('ret');
-        console.log(ret);
         return ret;
     }
 };
+
 module.exports = mongoose.model('Track', trackSchema);
