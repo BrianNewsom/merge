@@ -99,7 +99,6 @@ exports.addRep = function(req,res,next){
     Track.findById(req.params.id, function(err, track){
         if (err || track == null) console.log(err);
         else{
-            console.log(req.user);
             if (_.contains(req.user.reps,req.params.id)){
                 // User has already repped
                 // TODO: Handle this - undo star or give flash warning or something
@@ -108,7 +107,6 @@ exports.addRep = function(req,res,next){
             } else{
                 // Otherwise add to users repped and add rep to track
                 req.user.reps.push(req.params.id);
-                console.log(req.user.reps);
                 User.findByIdAndUpdate(req.user.id, {$set : {'reps' : req.user.reps}}, function(err, user){
                     if (err) return next(err);
                     track.addRep(function(){res.redirect('/track/' + req.params.id);});
@@ -160,4 +158,31 @@ exports.fork = function(req, res,next){
             })
         }
     })
+}
+
+exports.removeStem = function(req, res, next){
+    var trackid = req.params.trackid;
+    var stemid = req.params.stemid;
+
+    Track.findById(trackid, function(err, track){
+        // Validate
+        if (req.user.email == track.author){
+            var len = track.stems.length;
+            for(var i = 0 ; i < len ; i++) {
+                if(track.stems[i] === stemid) {
+                    track.stems.splice(i, 1);
+                }
+            }
+            track.save(function(err, track){
+                if (err) return next(err);
+                else{
+                    res.redirect('/track/' + trackid)
+                }
+            });
+        } else{
+            req.flash('errors', { msg: "You cannot delete from someone else's track!"});
+            res.redirect('/track/' + trackid)
+        }
+    });
+
 }

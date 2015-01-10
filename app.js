@@ -146,6 +146,7 @@ app.post('/fork/:id', trackController.fork);
 app.get('/user', passportConf.isAuthenticated, userController.getUser);
 app.get('/user/:id', passportConf.isAuthenticated, userController.getOtherUser)
 
+app.post('/removeStem/:trackid/:stemid', passportConf.isAuthenticated, trackController.removeStem);
 /**
  * API examples routes.
  */

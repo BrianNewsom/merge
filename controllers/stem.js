@@ -12,21 +12,29 @@ var aws = require('aws-sdk');
 
 exports.addStem = function(req,res){
     // Create undefined stem so we can name the uploaded file
-    var stem = new Stem({
-        'name': 'undefined',
-        'author': 'undefined'
-    });
+    // Validate user
+    Track.findById(req.params.trackid, function(err, track){
+        if (req.user.email != track.author){
+            req.flash("errors", {msg: "You cannot add a stem to someone else's track - try forking it!"});
+            res.redirect('/track/' + track.id);
+        } else {
+            var stem = new Stem({
+                'name': 'undefined',
+                'author': 'undefined'
+            });
 
-    stem.save(function(err,stem){
-        if (err) console.log(err);
-        else{
-            res.render('stem/create', {
-                title: 'Create A Stem',
-                trackid: req.params.trackid,
-                stemid: stem.id
-            })
+            stem.save(function(err,stem){
+                if (err) console.log(err);
+                else{
+                    res.render('stem/create', {
+                        title: 'Create A Stem',
+                        trackid: req.params.trackid,
+                        stemid: stem.id
+                    })
+                }
+            });
         }
-    });
+    })
 }
 
 /* Create a stem with form elements given */
@@ -48,7 +56,6 @@ exports.postStem = function(req,res,next){
                     } else{
                         track.addStem(stem.id, function(track){
                             console.log(res);
-                            res.redirect('/track/' + req.params.trackid);
                         });
                     }
                 })
