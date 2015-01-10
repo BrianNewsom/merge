@@ -15,6 +15,9 @@ block content
     ul
         each stem in stems
             li #{stem.name} by: #{stem.author}
+            form(id='delete-stem-form' method='POST', action='/removestem/#{track.id}/#{stem.id}')
+                input(type='hidden', name='_csrf', value=_csrf)
+                button.btn.btn-danger(type='submit') Delete Stem
 
 
     p.center(style="text-align:center")
