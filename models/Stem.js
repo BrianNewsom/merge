@@ -17,8 +17,6 @@ stemSchema.options.toJSON = {
         ret.id = String(ret._id);
         delete ret._id;
         delete ret.__v;
-        console.log('ret');
-        console.log(ret);
         return ret;
     }
 };
