@@ -46,6 +46,7 @@ exports.postStem = function(req,res,next){
         else{
             stem.name = req.body.name;
             stem.author = req.user.email;
+            //TODO: Get file type here somehow
             // Save and add stem to track
             stem.save(function(err,stem){
                 if (err) return next(err);
@@ -54,6 +55,7 @@ exports.postStem = function(req,res,next){
                     if (err || track == null){
                         console.log(err);
                     } else{
+
                         track.addStem(stem.id, function(track){
                             res.redirect('/track/' + track.id);
                         });
@@ -71,8 +73,7 @@ exports.signS3 = function(req,res){
     var AWS_SECRET_KEY= secrets.aws.secretAccessKey;
     var S3_BUCKET='briannewsomsongs';
 
-    // TODO: Add all file types to extensions obj
-    var key = req.params.stemid + secrets.extensions[req.query.s3_object_type];
+    var key = req.params.stemid;// + secrets.extensions[req.query.s3_object_type];
 
     aws.config.update({accessKeyId: AWS_ACCESS_KEY, secretAccessKey: AWS_SECRET_KEY});
     var s3 = new aws.S3();

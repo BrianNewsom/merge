@@ -57,7 +57,7 @@ function loadBuffers(stems) {
   var paths = [];
   for (var i = 0 ; i < stems.length ; i++) {
     // TODO: create url in better way..
-    var path = 'https://s3-us-west-2.amazonaws.com/briannewsomsongs/' + stems[i].id + '.mp3';
+    var path = 'https://s3-us-west-2.amazonaws.com/briannewsomsongs/' + stems[i].id;
     names.push(stems[i].name);
     paths.push(path);
   }
